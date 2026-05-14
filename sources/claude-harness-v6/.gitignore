@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local trace/state (사용자 환경 데이터 — repo 외부)
+*.jsonl
+*.log
+budget-state/
+dedup-state/
+bench/results/
+
+# Backup
+*.bak
+*.bak-*
+
+# Sensitive
+.env
+.env.local
+*.key
+*.pem
+.anthropic_api_key
+
+# 클로드 코드 자동 생성 (메모리/프로그레스)
+.claude/
+claude-progress.txt
+MEMORY.md

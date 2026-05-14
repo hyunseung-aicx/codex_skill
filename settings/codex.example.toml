@@ -1,0 +1,23 @@
+# Codex example config fragment for this unified skillpack.
+# Merge carefully into ~/.codex/config.toml; do not paste blindly over existing auth,
+# marketplace, plugin, project, or MCP settings.
+
+model = "gpt-5.5"
+model_reasoning_effort = "high"
+
+# Keep repository-level AGENTS.md as the main project context mechanism.
+# Add per-project trust entries through Codex UI/CLI rather than copying them here.
+
+# Example OpenTelemetry skeleton.
+# Choose your own exporter endpoint before enabling.
+# [otel]
+# log_user_prompt = true
+# environment = "local"
+#
+# [otel.exporter.otlp-http]
+# endpoint = "http://127.0.0.1:4318/v1/logs"
+
+# Example safety posture:
+# - Keep network restricted by default.
+# - Use approvals for external writes, package installs, deployment, and destructive actions.
+# - Prefer read-only MCP connectors until write workflows are explicitly reviewed.

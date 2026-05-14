@@ -1,0 +1,118 @@
+{
+  "_comment": "Claude Code Harness v6 settings.json 예시. ~/.claude/settings.json에 머지하여 사용. CLAUDE_SKILL_DIR 환경변수에 이 레포 경로 설정 필요.",
+
+  "theme": "dark",
+  "model": "sonnet",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/prompt-cache-monitor.sh",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ],
+
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/model-router-v2.sh",
+            "timeout": 3,
+            "statusMessage": "모델 라우팅 평가 중..."
+          },
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/tool-selector.sh",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/budget-gate.sh",
+            "timeout": 5,
+            "statusMessage": "예산 게이트 확인 중..."
+          }
+        ]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/tool-hash-dedup.sh",
+            "timeout": 3,
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/otel-trace-exporter.sh",
+            "timeout": 3,
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/routing-accuracy-tracker.sh",
+            "timeout": 3,
+            "async": true
+          }
+        ]
+      }
+    ],
+
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/llm-judge.sh",
+            "timeout": 45,
+            "statusMessage": "LLM-as-Judge 평가 중..."
+          },
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_SKILL_DIR}/hooks/prompt-cache-monitor.sh",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
+
+  "_env_vars_required": {
+    "ANTHROPIC_API_KEY": "필수 — llm-judge.sh가 Haiku 호출에 사용",
+    "CLAUDE_SKILL_DIR": "이 레포 절대 경로 (예: /Users/me/My_ClaudeCode_Skill_v6)"
+  },
+
+  "_env_vars_optional": {
+    "CLAUDE_BUDGET_SESSION_USD": "세션당 USD cap (기본 5)",
+    "CLAUDE_BUDGET_DAILY_USD": "일일 USD cap (기본 20)",
+    "CLAUDE_BUDGET_MODE": "block | warn (기본 block)",
+    "CLAUDE_JUDGE_MODEL": "Judge 모델 (기본 claude-haiku-4-5-20251001)",
+    "CLAUDE_JUDGE_MODE": "block | warn (기본 warn — 초기 도입 권장)",
+    "CLAUDE_JUDGE_DISABLE": "1 설정 시 비활성화",
+    "CLAUDE_DEDUP_THRESHOLD": "Tool hash 중복 임계치 (기본 5)",
+    "CLAUDE_DEDUP_MODE": "block | warn (기본 warn)",
+    "CLAUDE_ROUTER_DISABLE": "1 설정 시 model-router 비활성화",
+    "CLAUDE_TOOL_SELECTOR_DISABLE": "1 설정 시 tool-selector 비활성화",
+    "CLAUDE_BENCH_TASKS": "벤치 task 디렉토리 (기본 ~/.claude/bench/mini-tb)",
+    "CLAUDE_BENCH_MODEL": "벤치 모델 (기본 claude-sonnet-4-6)"
+  }
+}

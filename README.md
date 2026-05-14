@@ -1,74 +1,98 @@
 # codex_skill
 
-This repository exports the **sanitized Codex setup recognized on this Mac** and adds a research-backed playbook for FDE/Product Engineer workflows.
+Unified Codex GUI/terminal setup for this Mac, built on 2026-05-14 research and the local Claude/Codex skillpack inventory.
 
-It does **not** include auth/session/log/cache files from `~/.codex`.
+This repo merges:
 
-## Actual Export
+- the currently installed `My_ClaudeCode_Skill` Codex adapter stack
+- `hyunseung-aicx/claude_skill` Harness v6
+- a Codex-native install, doctor, update, and evaluation layer
 
-| Path | What it contains |
-| --- | --- |
-| `codex-export/config/config.sanitized.toml` | sanitized global Codex config |
-| `codex-export/SKILLS_INVENTORY.md` | system/plugin/vendor skill inventory |
-| `codex-export/vendor-skills/My_ClaudeCode_Skill/skills/` | exported vendor skill files |
-| `codex-export/DO_NOT_EXPORT.md` | files intentionally excluded for security |
-| `apps/personal-work-assistant/` | local Jira/Confluence/GitHub dashboard MVP |
+It intentionally excludes auth/session/log/cache files from `~/.codex`.
 
-## Why This Exists
+## Current Verdict
 
-FDE(Product Engineer) 관점에서 Codex를 단순 코드 생성기가 아니라 **업무 실행 하네스(Work Harness)** 로 쓰기 위한 셋업입니다.
+```text
+Score: 8.9 / 10
+Grade: A-
+Date: 2026-05-14
+```
 
-핵심 목표는 다음입니다.
+Why not A+ yet:
 
-- Jira, Confluence, GitHub, 로컬 레포를 하나의 업무 맥락으로 묶는다.
-- 고객 문제를 제품 기획, 시스템 설계, 구현, 검증, 운영 문서로 연결한다.
-- Skill, MCP, tool governance, human-in-the-loop를 통해 안전하게 실행한다.
-- 2026년 기준 agent engineering 연구 흐름에 맞춰 평가 가능하고 관측 가능한 구조로 발전시킨다.
+- Claude Code hooks are merged as reference/adaptable scripts, not silently auto-wired into Codex.
+- Internal benchmark/eval data is not yet included.
+- Codex-native OTel endpoint config still needs to be selected.
 
-## Additional Playbook Docs
+See [docs/2026-05-14-research-scorecard.md](docs/2026-05-14-research-scorecard.md).
+
+## What Is Included
 
 | Path | Purpose |
 | --- | --- |
-| `docs/00-executive-summary.md` | 사내 AI 세션용 요약 |
-| `docs/01-skill-engineering.md` | Skill Engineering 원칙 |
-| `docs/02-harness-engineering.md` | Codex Harness 설계 |
-| `docs/03-tool-governance.md` | 도구 권한, 승인, 보안 규칙 |
-| `docs/04-fde-product-engineer-workflows.md` | FDE/PE 업무 워크플로우 |
-| `docs/05-2026-research-evaluation.md` | 2026 연구 기반 평가와 점수 |
-| `docs/06-roadmap.md` | 다음 단계 로드맵 |
-| `examples/AGENTS.md` | 레포별 Codex 컨텍스트 파일 예시 |
-| `examples/skills/` | 커스텀 스킬 예시 |
-| `codex-export/REPRODUCE.md` | 다른 PC에서 재현할 때 필요한 절차 |
+| `skills/` | Codex-discoverable skills, including `codex-harness-v6`. |
+| `commands/` | Claude-style slash command briefs interpreted through Codex tools. |
+| `agents/` | Role briefs, including `judge-agent.md`. |
+| `rules/` | Focused rule packs for coding, security, testing, workflow, MCP, and harness behavior. |
+| `hooks/` | Deterministic helper scripts and Claude Code hook assets. Reference/adapt before automation. |
+| `memory-schema/` | Temporal memory pattern from Harness v6. |
+| `settings/` | Claude settings example and future Codex settings examples. |
+| `scripts/` | Setup, doctor, update, goal runner, and migration helpers. |
+| `docs/unified-integration-report.md` | Existing-vs-new comparison and merge decisions. |
+| `sources/` | Full source snapshots used to create the unified setup. |
+| `codex-export/` | Sanitized export of the original local Codex setup. |
+| `apps/personal-work-assistant/` | Read-only local dashboard MVP from the earlier export. |
 
-## Core Message
+## Install For Codex GUI/CLI
 
-> 2026년 AI 활용의 차이는 프롬프트가 아니라, AI가 안전하게 도구를 쓰고 맥락을 읽고 반복 가능한 방식으로 일하게 만드는 Skill & Harness Engineering에 있다.
-
-## Architecture
-
-```text
-User Request
-  -> Skill Router
-  -> Context Layer
-     - AGENTS.md
-     - Jira
-     - Confluence
-     - GitHub
-     - Local repositories
-  -> Tool Harness
-     - filesystem
-     - shell
-     - browser
-     - MCP tools
-  -> Permission Layer
-     - read-only by default
-     - approval for write/deploy/destructive actions
-  -> Verification Loop
-     - tests
-     - screenshots
-     - API checks
-     - PR/Jira evidence
+```bash
+./setup_codex.sh
 ```
+
+Then restart Codex GUI/CLI or open a new session so skill metadata is reloaded.
+
+Health check:
+
+```bash
+~/.codex/bin/codex-skillpack-doctor
+```
+
+Update from this repo after pulling:
+
+```bash
+~/.codex/bin/codex-skillpack-update
+```
+
+## Active vs Reference
+
+Active after install:
+
+- `skills/**/SKILL.md`
+- `codex-harness-v6`
+- `codex-claude-skillpack`
+- maintenance commands under `~/.codex/bin`
+- symlinked command/rule/agent resources under `~/.codex/claude-skillpack`
+
+Reference/adaptable:
+
+- Claude Code lifecycle hooks in `hooks/`
+- `settings/settings.example.json`
+- `llm-judge.sh`, because it requires an API key and explicit invocation
+- OTel exporter until a Codex trace endpoint is configured
+- benchmark runner until benchmark tasks exist
+
+## Research Basis
+
+The final scorecard uses current sources around:
+
+- OpenAI Codex safety, agent loop, skills, sandboxing, and telemetry
+- Anthropic long-running harness and three-agent harness design
+- LangChain Terminal-Bench harness engineering and eval design
+- OWASP Agentic Top 10 2026
+- OpenTelemetry GenAI conventions
+- Zep temporal memory
+- Agent-as-a-Judge
+- MCP and skill supply-chain security research
 
 ## Local Dashboard
 
@@ -84,36 +108,6 @@ Open:
 http://127.0.0.1:4173
 ```
 
-It is read-only by design unless write actions are explicitly added later.
+## Core Principle
 
-## Research-Informed Score
-
-Current setup score as of 2026-05-14:
-
-```text
-7.2 / 10
-```
-
-Strong:
-
-- Skill stack for FDE/Product Engineer workflows
-- MCP-based enterprise context access
-- Local code/repo/browser execution harness
-- Human-in-the-loop posture
-
-Needs work:
-
-- Agent observability and traces
-- Skill evaluation datasets
-- Structured long-term memory
-- MCP/security hardening
-- Repo-level `AGENTS.md` standardization
-
-See `docs/05-2026-research-evaluation.md`.
-
-## Recommended Talk Title
-
-```text
-Prompt Engineering 이후:
-FDE/Product Engineer를 위한 Codex Skill & Harness Engineering
-```
+2026 agent performance is not only about the model. It is about the harness: skills, scoped context, tool governance, verification, observability, memory, and human approval boundaries.

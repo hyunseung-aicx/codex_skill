@@ -1,0 +1,50 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "hyunseung1119-claude-setup",
+  "version": "9.1.0",
+  "description": "2026 SOTA Claude Code 하네스 셋업 — 14/27 events × 35 hooks, 24 agents, 38 skills, 33 commands, 16 rules. Spec-driven + error-recovery + senior-fundamentals 체인 포함.",
+  "owner": {
+    "name": "hyunseung1119",
+    "email": "dnclgk9@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "claude-setup-harness",
+      "description": "개인용 종합 하네스 — hooks/agents/skills/commands/rules 풀스택. install_copy.ps1 또는 setup.sh로 ~/.claude/에 복사.",
+      "version": "9.1.0",
+      "author": {
+        "name": "hyunseung1119",
+        "email": "dnclgk9@gmail.com"
+      },
+      "source": ".",
+      "category": "development",
+      "tags": [
+        "harness-engineering",
+        "spec-driven",
+        "error-recovery",
+        "senior-fundamentals",
+        "multi-agent",
+        "hooks"
+      ],
+      "strict": false
+    }
+  ],
+  "references": [
+    {
+      "title": "Claude Code Best Practices (공식)",
+      "url": "https://code.claude.com/docs/en/best-practices"
+    },
+    {
+      "title": "Claude Code Hooks Reference (공식)",
+      "url": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "title": "Plugin Marketplaces (공식)",
+      "url": "https://code.claude.com/docs/en/plugin-marketplaces"
+    },
+    {
+      "title": "Harness Engineering — HumanLayer",
+      "url": "https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents"
+    }
+  ]
+}
