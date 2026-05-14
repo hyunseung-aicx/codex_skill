@@ -13,7 +13,7 @@ It intentionally excludes auth/session/log/cache files from `~/.codex`.
 ## Current Verdict
 
 ```text
-Score: 8.9 / 10
+Score: 9.3 / 10
 Grade: A-
 Date: 2026-05-14
 ```
@@ -23,6 +23,7 @@ Why not A+ yet:
 - Claude Code hooks are merged as reference/adaptable scripts, not silently auto-wired into Codex.
 - Internal benchmark/eval data is not yet included.
 - Codex-native OTel endpoint config still needs to be selected.
+- GitHub/Sentry/Figma MCPs require user-side auth or desktop runtime state before full use.
 
 See [docs/2026-05-14-research-scorecard.md](docs/2026-05-14-research-scorecard.md).
 
@@ -39,6 +40,8 @@ See [docs/2026-05-14-research-scorecard.md](docs/2026-05-14-research-scorecard.m
 | `settings/` | Claude settings example and future Codex settings examples. |
 | `scripts/` | Setup, doctor, update, goal runner, and migration helpers. |
 | `docs/unified-integration-report.md` | Existing-vs-new comparison and merge decisions. |
+| `docs/dangerous-command-guardrails.md` | Destructive-command block policy and safe alternatives. |
+| `docs/mcp-developer-stack.md` | Frontend/dev MCP stack and usage policy. |
 | `sources/` | Full source snapshots used to create the unified setup. |
 | `codex-export/` | Sanitized export of the original local Codex setup. |
 | `apps/personal-work-assistant/` | Read-only local dashboard MVP from the earlier export. |
@@ -93,6 +96,7 @@ The final scorecard uses current sources around:
 - Zep temporal memory
 - Agent-as-a-Judge
 - MCP and skill supply-chain security research
+- Playwright MCP, Chrome DevTools MCP, Figma Dev Mode MCP, OpenAI Docs MCP, Context7, GitHub, Filesystem, Memory, Prisma, Sentry, and project-scoped DB MCP docs
 
 ## Local Dashboard
 

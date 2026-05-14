@@ -5,11 +5,11 @@ Date: 2026-05-14
 ## Verdict
 
 ```text
-Unified codex_skill score: 8.9 / 10
+Unified codex_skill score: 9.3 / 10
 Grade: A-
 ```
 
-The setup is strong enough to be used as a daily Codex skill/harness layer. It is not yet A+ because v6 hooks are merged as reference/adaptable assets rather than fully wired Codex event hooks, and because internal eval/benchmark data is not yet present.
+The setup is strong enough to be used as a daily Codex skill/harness layer. The score increased after adding destructive-command guardrails and a developer MCP stack for frontend inspection, browser debugging, docs lookup, Figma context, GitHub context, filesystem resources, memory, Sentry, and Prisma local DB workflows. It is not yet A+ because v6 hooks are merged as reference/adaptable assets rather than fully wired Codex event hooks, GitHub/Sentry/Figma require user-side auth or runtime state, project DB connectors need scoped credentials, and internal eval/benchmark data is not yet present.
 
 ## Scorecard
 
@@ -17,11 +17,11 @@ The setup is strong enough to be used as a daily Codex skill/harness layer. It i
 | --- | ---: | --- |
 | Skill portability and discovery | 9.3 | Uses Codex-discoverable `skills/**/SKILL.md`; mirrors the Agent Skills folder model. |
 | Harness engineering | 9.1 | Combines skills, command briefs, rules, hooks, progress, and maintenance scripts. |
-| Tool/MCP governance | 8.6 | Strong approval posture and MCP awareness; needs stricter read/write credential separation. |
+| Tool/MCP governance | 9.3 | Adds OpenAI Docs, Playwright, Chrome DevTools, Figma Desktop, Context7, GitHub, Filesystem, Memory, Sentry, Prisma local, Atlassian, and Slack MCP coverage; needs stricter read/write credential separation for DB/cloud writes. |
 | Evaluation and judge quality | 8.4 | Adds judge agent, LLM judge hook, verification hooks; needs internal task benchmark. |
 | Observability and replay | 8.2 | Adds trace hooks and OTel exporter references; Codex-native OTel config still needs endpoint wiring. |
 | Memory and context hygiene | 8.8 | Adds temporal memory schema and scoped context rules; no vector/graph index yet. |
-| Security and supply-chain controls | 8.7 | Includes dangerous command, secret, dependency, MCP, and skill supply-chain guidance. |
+| Security and supply-chain controls | 9.1 | Adds expanded dangerous-command blocker across filesystem, Git, DB, Docker, K8s, IaC, cloud, release, disk, and permission operations. |
 | Install/update ergonomics | 9.0 | Reuses `setup_codex.sh`, doctor, update, and symlink strategy for GUI/CLI. |
 
 ## Research Findings
@@ -137,15 +137,60 @@ Sources:
 - https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
 - https://arxiv.org/abs/2505.11274
 
+### 8. Frontend agent work should use structured browser and design context
+
+Playwright MCP uses accessibility snapshots, giving agents stable element references and structured page state. Chrome DevTools MCP adds console, network, screenshot, and performance trace access. Figma Dev Mode MCP brings selected frames, variables, components, and layout data into the agent workflow.
+
+Decision:
+
+- Use `playwright` first for local frontend inspection and interaction.
+- Use `chrome-devtools` for console/network/performance debugging.
+- Use `figma-desktop` when design context is needed and Figma Desktop has the MCP server enabled.
+- Keep browser MCP sessions isolated from normal user profile data.
+
+Sources:
+
+- https://playwright.dev/mcp/introduction
+- https://playwright.dev/mcp/snapshots
+- https://github.com/ChromeDevTools/chrome-devtools-mcp
+- https://developers.figma.com/docs/figma-mcp-server/
+- https://developers.figma.com/docs/figma-mcp-server/local-server-installation/
+- https://docs.sentry.io/product/sentry-mcp/
+- https://www.prisma.io/docs/postgres/integrations/mcp-server
+- https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem
+- https://github.com/modelcontextprotocol/servers/tree/main/src/memory
+
+### 9. Destructive shell commands need pre-tool policy
+
+Official docs for Git, Docker, Kubernetes, Terraform, cloud CLIs, package registries, and databases all show command families that can delete durable state, rewrite history, or remove published artifacts. Agent workflows should convert these to dry-run/list/plan steps before execution.
+
+Decision:
+
+- Expand `hooks/dangerous-command-blocker.sh`.
+- Add `docs/dangerous-command-guardrails.md`.
+- Block broad deletes, destructive Git, DB/ORM reset, Docker volume deletion, K8s delete/drain, IaC destroy, cloud deletion, package unpublish, and disk/permission destruction.
+
+Sources:
+
+- https://git-scm.com/docs/git-clean
+- https://git-scm.com/docs/git-reset
+- https://developer.hashicorp.com/terraform/cli/commands/destroy
+- https://docs.docker.com/engine/manage-resources/pruning/
+- https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+- https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/rm.html
+- https://docs.npmjs.com/unpublishing-packages-from-the-registry
+
 ## Gap Analysis
 
 | Gap | Impact | Fix |
 | --- | --- | --- |
-| No Codex-native hook lifecycle | Cannot auto-run Claude hooks safely | Patch scripts into manual commands, CI jobs, or Codex automations. |
+| No Codex-native hook lifecycle | Cannot auto-run all Claude hooks safely | Patch scripts into manual commands, CI jobs, or Codex automations. |
 | No internal eval benchmark | Score is architecture-based, not empirical | Add 20-task benchmark with expected tool paths and verification scripts. |
 | OTel endpoint not configured | Trace exporter is not production telemetry yet | Add `settings/codex-otel.example.toml` after endpoint selection. |
 | Skill supply-chain review is manual | Risk from untrusted `SKILL.md` and hook scripts | Add a skill trust checklist and metadata linter. |
 | Memory schema is file-based | No retrieval ranking or stale fact detection at scale | Add index only after memory corpus grows. |
+| GitHub/Sentry/Figma MCP need auth/runtime | Configured but not always usable immediately | Run OAuth/login flows and enable Figma Desktop MCP when needed. |
+| Generic DB MCP needs scoped credentials | Global DB connection would be risky | Add Postgres/Supabase/Neon per project with dev/staging credentials only. |
 
 ## Final Recommendation
 
