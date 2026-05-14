@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Work Assistant</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">AICX 개인 업무 관제</p>
+        <h1>Personal Work Assistant</h1>
+      </div>
+      <div class="toolbar">
+        <button id="refreshButton" class="primary">새로고침</button>
+        <span id="connectionBadge" class="badge">연결 확인 중</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="summary-grid">
+        <article class="metric">
+          <span>활성 스프린트 내 담당</span>
+          <strong id="activeCount">-</strong>
+        </article>
+        <article class="metric">
+          <span>전체 미완료 담당</span>
+          <strong id="assignedCount">-</strong>
+        </article>
+        <article class="metric">
+          <span>열린 GitHub PR</span>
+          <strong id="pullRequestCount">-</strong>
+        </article>
+        <article class="metric">
+          <span>누락 체크</span>
+          <strong id="riskCount">-</strong>
+        </article>
+      </section>
+
+      <section class="main-grid">
+        <article class="panel wide">
+          <div class="panel-header">
+            <div>
+              <h2>오늘 봐야 할 티켓</h2>
+              <p>활성 스프린트에 들어간 내 담당 AICC 티켓 기준입니다.</p>
+            </div>
+          </div>
+          <div id="ticketList" class="ticket-list"></div>
+        </article>
+
+        <article class="panel">
+          <h2>누락 체크</h2>
+          <div id="checklist" class="checklist"></div>
+        </article>
+
+        <article class="panel">
+          <h2>관련 GitHub PR</h2>
+          <div id="githubList" class="link-list"></div>
+        </article>
+
+        <article class="panel wide">
+          <h2>티켓별 맥락</h2>
+          <div id="contextList" class="context-list"></div>
+        </article>
+      </section>
+    </main>
+
+    <dialog id="issueDialog">
+      <div class="dialog-header">
+        <h2 id="dialogTitle">Issue</h2>
+        <button id="closeDialog" aria-label="닫기">닫기</button>
+      </div>
+      <pre id="dialogBody"></pre>
+    </dialog>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
