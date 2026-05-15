@@ -23,7 +23,7 @@ The result is not a raw Claude Code clone. It is a Codex-native skillpack that k
 | Memory | Progress schema and learning hooks | Temporal memory schema | Add `memory-schema/` as the preferred durable-memory pattern. |
 | Settings | Claude local settings and Codex setup scripts | Claude `settings.example.json` | Preserve v6 settings as Claude example; add Codex guidance in docs. |
 | Install | `setup_codex.sh`, doctor, update, uninstall | macOS Claude guide only | Reuse Codex setup scripts and expand doctor expectations. |
-| Research score | 2026-04 score | 2026-05 score | Replace with 2026-05-14 scorecard. |
+| Research score | 2026-04 score | 2026-05 score | Replace with 2026-05-15 scorecard. |
 
 ## Final Repository Shape
 
@@ -46,7 +46,7 @@ codex_skill/
 ├── settings/
 ├── docs/
 │   ├── unified-integration-report.md
-│   └── 2026-05-14-research-scorecard.md
+│   └── 2026-05-15-research-scorecard.md
 └── sources/
     ├── legacy-skillpack/
     └── claude-harness-v6/

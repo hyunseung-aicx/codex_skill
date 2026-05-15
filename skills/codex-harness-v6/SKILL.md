@@ -17,7 +17,7 @@ It merges the legacy Claude Code skillpack with the newer 2026-05 harness materi
 - `hooks/` - deterministic shell helpers and Claude Code hook scripts. Treat as reference or manually runnable helpers unless adapted.
 - `memory-schema/` - temporal memory frontmatter pattern.
 - `settings/settings.example.json` - Claude Code hook example, not direct Codex config.
-- `docs/2026-05-14-research-scorecard.md` - evidence-backed evaluation.
+- `docs/2026-05-15-research-scorecard.md` - evidence-backed evaluation.
 - `docs/unified-integration-report.md` - comparison and integration decisions.
 
 ## Operating Rules
@@ -73,4 +73,4 @@ When evaluating this setup, score each area from 0-10:
 - Security and supply-chain controls
 - Install/update ergonomics
 
-Use `docs/2026-05-14-research-scorecard.md` as the canonical scorecard.
+Use `docs/2026-05-15-research-scorecard.md` as the canonical scorecard.

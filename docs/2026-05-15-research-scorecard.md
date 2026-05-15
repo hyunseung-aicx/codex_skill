@@ -1,26 +1,26 @@
-# 2026-05-14 Research Scorecard
+# 2026-05-15 Research Scorecard
 
-Date: 2026-05-14
+Date: 2026-05-15
 
 ## Verdict
 
 ```text
-Unified codex_skill score: 9.3 / 10
+Unified codex_skill score: 9.4 / 10
 Grade: A-
 ```
 
-The setup is strong enough to be used as a daily Codex skill/harness layer. The score increased after adding destructive-command guardrails and a developer MCP stack for frontend inspection, browser debugging, docs lookup, Figma context, GitHub context, filesystem resources, memory, Sentry, and Prisma local DB workflows. It is not yet A+ because v6 hooks are merged as reference/adaptable assets rather than fully wired Codex event hooks, GitHub/Sentry/Figma require user-side auth or runtime state, project DB connectors need scoped credentials, and internal eval/benchmark data is not yet present.
+The setup is strong enough to be used as a daily Codex skill/harness layer. The score increased after adding destructive-command guardrails, a developer MCP stack, native `/goal` enablement, Hermes-style curator scripts, memory audit, and a durable agent board. It is not yet A+ because v6 hooks are merged as reference/adaptable assets rather than fully wired Codex event hooks, GitHub/Sentry/Figma require user-side auth or runtime state, project DB connectors need scoped credentials, and internal eval/benchmark data is not yet present.
 
 ## Scorecard
 
 | Area | Score | Evidence-based rationale |
 | --- | ---: | --- |
 | Skill portability and discovery | 9.3 | Uses Codex-discoverable `skills/**/SKILL.md`; mirrors the Agent Skills folder model. |
-| Harness engineering | 9.1 | Combines skills, command briefs, rules, hooks, progress, and maintenance scripts. |
+| Harness engineering | 9.4 | Combines skills, command briefs, rules, hooks, progress, `/goal`, curator scripts, memory audit, and maintenance scripts. |
 | Tool/MCP governance | 9.3 | Adds OpenAI Docs, Playwright, Chrome DevTools, Figma Desktop, Context7, GitHub, Filesystem, Memory, Sentry, Prisma local, Atlassian, and Slack MCP coverage; needs stricter read/write credential separation for DB/cloud writes. |
 | Evaluation and judge quality | 8.4 | Adds judge agent, LLM judge hook, verification hooks; needs internal task benchmark. |
 | Observability and replay | 8.2 | Adds trace hooks and OTel exporter references; Codex-native OTel config still needs endpoint wiring. |
-| Memory and context hygiene | 8.8 | Adds temporal memory schema and scoped context rules; no vector/graph index yet. |
+| Memory and context hygiene | 9.1 | Adds temporal memory schema, Memory MCP policy, memory audit, and scoped context rules; no vector/graph index yet. |
 | Security and supply-chain controls | 9.1 | Adds expanded dangerous-command blocker across filesystem, Git, DB, Docker, K8s, IaC, cloud, release, disk, and permission operations. |
 | Install/update ergonomics | 9.0 | Reuses `setup_codex.sh`, doctor, update, and symlink strategy for GUI/CLI. |
 
@@ -179,6 +179,42 @@ Sources:
 - https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
 - https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/rm.html
 - https://docs.npmjs.com/unpublishing-packages-from-the-registry
+
+### 10. Hermes-style curator loops should be reviewable files
+
+Hermes Agent trends point toward persistent memory, skill curation, and autonomous self-improvement. In Codex, the safer translation is not an always-on daemon that rewrites its own operating system. The safer translation is a reviewable curator loop that writes reports and board items.
+
+Decision:
+
+- Add `docs/hermes-patterns-for-codex.md`.
+- Add `scripts/codex-skill-curator.sh`.
+- Add `scripts/codex-memory-audit.sh`.
+- Add `hooks/skill-drift-checker.sh`.
+- Add `progress/BOARD.md`.
+
+Sources:
+
+- https://github.com/NousResearch/hermes-agent
+- https://hermes-agent.nousresearch.com/docs/
+- https://newreleases.io/project/github/NousResearch/hermes-agent/release/v2026.4.30
+- https://arxiv.org/abs/2605.13357
+
+### 11. Native `/goal` should be paired with local durable packets
+
+Codex `/goal` makes long-running objectives a first-class workflow. The local harness still adds value by creating branch/worktree isolation and durable `GOAL.md`, `PROMPT.md`, and `STATUS.md` files.
+
+Decision:
+
+- Enable `features.goals = true`.
+- Update `commands/goal.md` and `skills/goal-runner/SKILL.md`.
+- Extend `scripts/codex-goal.sh` with stop conditions and curator follow-up.
+- Add `docs/goal-long-run-methodology.md`.
+
+Sources:
+
+- https://developers.openai.com/codex/cli/slash-commands
+- https://openai.com/index/unrolling-the-codex-agent-loop/
+- https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
 
 ## Gap Analysis
 

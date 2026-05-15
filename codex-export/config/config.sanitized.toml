@@ -4,6 +4,9 @@
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 
+[features]
+goals = true
+
 [marketplaces.openai-bundled]
 last_updated = "2026-05-13T02:51:23Z"
 source_type = "local"

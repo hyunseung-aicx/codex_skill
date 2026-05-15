@@ -1,6 +1,6 @@
 # codex_skill
 
-Unified Codex GUI/terminal setup for this Mac, built on 2026-05-14 research and the local Claude/Codex skillpack inventory.
+Unified Codex GUI/terminal setup for this Mac, built on 2026-05-15 research and the local Claude/Codex skillpack inventory.
 
 This repo merges:
 
@@ -13,9 +13,9 @@ It intentionally excludes auth/session/log/cache files from `~/.codex`.
 ## Current Verdict
 
 ```text
-Score: 9.3 / 10
+Score: 9.4 / 10
 Grade: A-
-Date: 2026-05-14
+Date: 2026-05-15
 ```
 
 Why not A+ yet:
@@ -24,8 +24,9 @@ Why not A+ yet:
 - Internal benchmark/eval data is not yet included.
 - Codex-native OTel endpoint config still needs to be selected.
 - GitHub/Sentry/Figma MCPs require user-side auth or desktop runtime state before full use.
+- Fully automated skill/memory pruning is intentionally review-only for now.
 
-See [docs/2026-05-14-research-scorecard.md](docs/2026-05-14-research-scorecard.md).
+See [docs/2026-05-15-research-scorecard.md](docs/2026-05-15-research-scorecard.md).
 
 ## What Is Included
 
@@ -42,6 +43,10 @@ See [docs/2026-05-14-research-scorecard.md](docs/2026-05-14-research-scorecard.m
 | `docs/unified-integration-report.md` | Existing-vs-new comparison and merge decisions. |
 | `docs/dangerous-command-guardrails.md` | Destructive-command block policy and safe alternatives. |
 | `docs/mcp-developer-stack.md` | Frontend/dev MCP stack and usage policy. |
+| `docs/hermes-patterns-for-codex.md` | Hermes-style persistent agent patterns adapted to Codex. |
+| `docs/goal-long-run-methodology.md` | Native `/goal` and local goal packet methodology. |
+| `docs/agent-operating-model.md` | Planner/worker/reviewer/judge/curator operating model. |
+| `progress/BOARD.md` | Durable agent board for long-running harness work. |
 | `sources/` | Full source snapshots used to create the unified setup. |
 | `codex-export/` | Sanitized export of the original local Codex setup. |
 | `apps/personal-work-assistant/` | Read-only local dashboard MVP from the earlier export. |
@@ -97,6 +102,7 @@ The final scorecard uses current sources around:
 - Agent-as-a-Judge
 - MCP and skill supply-chain security research
 - Playwright MCP, Chrome DevTools MCP, Figma Dev Mode MCP, OpenAI Docs MCP, Context7, GitHub, Filesystem, Memory, Prisma, Sentry, and project-scoped DB MCP docs
+- Hermes Agent, Codex `/goal`, long-running harness, skill curator, and memory hygiene patterns
 
 ## Local Dashboard
 

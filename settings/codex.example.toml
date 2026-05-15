@@ -5,6 +5,9 @@
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 
+[features]
+goals = true
+
 # Keep repository-level AGENTS.md as the main project context mechanism.
 # Add per-project trust entries through Codex UI/CLI rather than copying them here.
 

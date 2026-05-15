@@ -82,7 +82,7 @@ install_skills_to "$CODEX_SKILLS_DIR" "Codex CLI/GUI"
 install_skills_to "$AGENTS_SKILLS_DIR" "open agent skill discovery"
 
 echo -e "${CYAN}Installing terminal maintenance commands...${NC}"
-for command_name in codex-skillpack-doctor codex-skillpack-update codex-goal; do
+for command_name in codex-skillpack-doctor codex-skillpack-update codex-goal codex-skill-curator codex-memory-audit; do
     command_path="$SCRIPT_DIR/scripts/$command_name.sh"
     if [ -f "$command_path" ]; then
         chmod +x "$command_path" 2>/dev/null || true

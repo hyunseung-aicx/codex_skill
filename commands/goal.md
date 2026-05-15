@@ -6,6 +6,20 @@ Durable long-running development workflow for Codex GUI and terminal.
 
 Use `/goal` when the user wants Codex to keep developing during lunch, meetings, after work, or any long timebox from about 1 hour up to a full-day background session. The workflow must split work by Git branch/worktree, preserve progress in files, and make it easy to move between GUI supervision and terminal execution.
 
+Native Codex `/goal` requires:
+
+```toml
+[features]
+goals = true
+```
+
+Supported native commands:
+
+- `/goal <objective>`
+- `/goal pause`
+- `/goal resume`
+- `/goal clear`
+
 ## Workflow
 
 1. Clarify the objective only if the goal is unsafe or too ambiguous to start.
@@ -14,7 +28,9 @@ Use `/goal` when the user wants Codex to keep developing during lunch, meetings,
 4. Use local terminal only for foreground commands, app-specific dev servers, or manual verification that needs the user's local environment.
 5. Keep a durable status file under `.codex-goals/<goal-id>/STATUS.md`.
 6. Run the smallest reliable verification loop repeatedly: targeted tests first, then build/lint/e2e when the blast radius justifies it.
-7. Stop before destructive actions, secrets, paid external services, production data changes, or ambiguous product decisions.
+7. Keep going until the timebox, a stop condition, or a verification blocker.
+8. Stop before destructive actions, secrets, paid external services, production data changes, or ambiguous product decisions.
+9. Run the curator loop after long sessions: `scripts/codex-skill-curator.sh` and `scripts/codex-memory-audit.sh` when relevant.
 
 ## GUI <-> Terminal Handoff
 
@@ -49,6 +65,24 @@ Use codex/goal-<slug>. Keep changes isolated.
 Verification:
 <test/build/lint commands or auto-detect>
 
+Autonomy:
+Keep working in checkpoints until the timebox or a stop condition. Do not stop at a proposal if implementation is safe and scoped.
+
 Report:
 Update .codex-goals/<goal-id>/STATUS.md after every checkpoint. Before stopping, list changed files, tests run, unresolved issues, and the next exact continuation prompt.
+```
+
+## After-Goal Curator
+
+After multi-hour work, especially if skills/rules/hooks/commands or durable memory changed:
+
+```bash
+scripts/codex-skill-curator.sh
+scripts/codex-memory-audit.sh
+```
+
+Move follow-up items into:
+
+```text
+progress/BOARD.md
 ```

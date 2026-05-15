@@ -14,6 +14,9 @@ Creates:
   .codex-goals/<goal-id>/STATUS.md
 
 Use the PROMPT.md content in Codex GUI /goal, or run terminal Codex from the generated worktree/branch.
+
+Note:
+  Native Codex /goal requires features.goals = true in ~/.codex/config.toml.
 USAGE
 }
 
@@ -116,7 +119,7 @@ EOF
 cat > "$GOAL_DIR/PROMPT.md" <<EOF
 /goal
 
-Use the goal-runner workflow.
+Use the native Codex /goal workflow plus the local goal-runner harness.
 
 Objective:
 $GOAL_TEXT
@@ -136,11 +139,25 @@ Operating loop:
 3. Implement in small slices.
 4. Run targeted verification after each slice.
 5. Update $GOAL_DIR/STATUS.md with progress, commands run, failures, and next step.
-6. Before stopping, summarize changed files, verification status, residual risks, and exact next command/prompt to continue.
+6. If the task runs long, keep going until the timebox, a stop condition, or verification blocker.
+7. Before stopping, summarize changed files, verification status, residual risks, and exact next command/prompt to continue.
+
+Stop conditions:
+- destructive command
+- production data or credentials
+- paid service operation
+- ambiguous product decision
+- migration touching non-dev data
+- diff that exceeds the goal contract
 
 Use these local files:
 - Goal contract: $GOAL_DIR/GOAL.md
 - Status log: $GOAL_DIR/STATUS.md
+- Agent board: $REPO_ROOT/progress/BOARD.md
+
+After completion:
+- Run scripts/codex-skill-curator.sh if skills/rules/hooks/commands changed.
+- Run scripts/codex-memory-audit.sh if durable memory/progress files changed.
 EOF
 
 cat > "$GOAL_DIR/STATUS.md" <<EOF
